@@ -1,11 +1,15 @@
-az group create --name arm-vscode-deploy --location southeastasia
+## az group create --name arm-vscode-deploy --location southeastasia
 ####
 ## Create Initiative
+$policyName = "TestPolicySET"
+az policy set-definition create -n $policyName --definitions ./definition-set.json
+$policyID =  az policy set-definition show -n $policyName -o tsv --query id
 
-###
+### Assign to Subscription
+az policy assignment create --name AzureTestPolicyAssign --policy-set-definition $policyID
 
-## Deploy to RG
-az deployment group create --resource-group arm-vscode-deploy --template-file azurepolicy.bicep 
+# ## Deploy to RG
+# az deployment group create --resource-group arm-vscode-deploy --template-file azurepolicy.bicep 
 
-## Deploy to Subscription
-az deployment sub create -l southeastasia --template-file azurepolicy-sub.bicep --name azurepolicydeploy
+# ## Deploy to Subscription
+# az deployment sub create -l southeastasia --template-file azurepolicy-sub.bicep --name azurepolicydeploy
