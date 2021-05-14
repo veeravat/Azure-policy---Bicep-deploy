@@ -1,0 +1,11 @@
+az group create --name arm-vscode-deploy --location southeastasia
+####
+## Create Initiative
+
+###
+
+## Deploy to RG
+az deployment group create --resource-group arm-vscode-deploy --template-file azurepolicy.bicep 
+
+## Deploy to Subscription
+az deployment sub create -l southeastasia --template-file azurepolicy-sub.bicep --name azurepolicydeploy
